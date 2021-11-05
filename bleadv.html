@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Navigation</title>
+</head>
+
+<body
+    style="background-image: url('NIIT-University.jpg'); background-repeat:no-repeat;  background-attachment: fixed;  background-size: cover;">
+    <form>
+        <center>
+            <button
+                style="border: none; outline: 0; padding: 12px; color: white; background-color: #000; text-align: center; cursor: pointer;   width: 50%; font-size: 18px;">
+                Connect with Bluetooth device for Indoor Navigation.
+            </button>
+        </center>
+    </form>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+    <script>
+        var deviceName = 'LT202' && 'ECELab3'
+
+        function isWebBluetoothEnabled() {
+            
+            if (!navigator.bluetooth) {
+                console.log('Web Bluetooth API is not available in this browser!')
+                return false
+            }
+
+            return true
+        }
+        var deviceName = "";
+
+        function getDeviceInfo() {
+            let options = {
+                acceptAllDevices: true, // Option to accept all devices
+                acceptAllAdvertisements: true
+            }
+            console.log('Requesting Bluetooth Device...')
+            navigator.bluetooth.requestDevice(options).then(device => {
+                console.log(device);
+                console.log('> Name: ' + device.name);
+                // console.log('Rssi: ' + device.rssi);
+                console.log('UUID: ' + device.uiids);
+                console.log('ID: ' + device.id);
+                deviceName = device.name;
+                if (device.name == 'LT202') {
+                    window.open('1.html');
+                } else if (device.name == 'ECELab3') {
+                    window.open('2.html');s
+                }
+            }).catch(error => {
+                console.log('Argh! ' + error)
+            })
+
+            
+            return deviceName;
+        }
+
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.stopPropagation()
+            event.preventDefault()
+
+            if (isWebBluetoothEnabled()) {
+                getDeviceInfo()
+                var Dname = deviceName;
+                //saveMessage(Dname);
+
+
+            }
+        })
+
+        // Your web app's Firebase configuration
+        // var firebaseConfig = {
+        //     apiKey: "AIzaSyAtHG3eCHrwDjxUVdTJReQdhYN21BJjLRk",
+        //     authDomain: "niit-tour.firebaseapp.com",
+        //     projectId: "niit-tour",
+        //     storageBucket: "niit-tour.appspot.com",
+        //     messagingSenderId: "759103201380",
+        //     appId: "1:759103201380:web:8e106a00c5259268467f71"
+        // };
+        // Initialize Firebase
+        // firebase.initializeApp(firebaseConfig);
+
+
+        // var messagesRef = firebase.database()
+        //     .ref('Bluetooth Data');
+
+        // document.getElementById('form')
+        //     .addEventListener('submit', submitForm);
+
+
+        // function googleSignout() {
+        //     firebase.auth().signOut()
+
+        //         .then(function () {
+        //             console.log('Signout Succesfull')
+        //         }, function (error) {
+        //             console.log('Signout Failed')
+        //         });
+        // }
+        // Save message to firebase 
+        // function saveMessage(Dname) {
+        //     var newMessageRef = messagesRef.push();
+        //     newMessageRef.set({
+        //         Devicename: Dname,
+
+        //     });
+        // }
+
+
+    </script>
+</body>
+
+</html>
